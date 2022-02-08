@@ -19,8 +19,11 @@ def add_time(start, duration, starting_day=False):
     # minutes_sum = int(start_time_to_minutes) + int(duration_minutes)
 
     new_time = ''
-    if str(duration_hours) == "0" and str(duration_minutes) == "00":
+    if duration == "0:00":#str(duration_hours) == "0" and str(duration_minutes) == "00":
         new_time += start
+
+    elif duration == "24:00":
+        new_time += start + " (next day)"
 
     elif start_time_split[1] == "PM" and time_till_am_pm_swap < total_duration_minutes:
         new_time_hours = int((total_duration_minutes - time_till_am_pm_swap) / 60)
