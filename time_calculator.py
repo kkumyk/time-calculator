@@ -28,7 +28,15 @@ def add_time(start, duration, starting_day=False):
         new_time_minutes = (total_duration_minutes - time_till_am_pm_swap) - new_time_hours * 60
         new_time += str(int(new_time_hours)) + ":" + str(new_time_minutes) + " AM (next day)"
 
+    elif start_time_split[1] == "AM" and (total_duration_minutes - time_till_am_pm_swap) < 60:
+        new_time_minutes = int(total_duration_minutes - time_till_am_pm_swap)
+        if len(str(new_time_minutes)) != 2:
+            new_time += "12" + ":0" + str(new_time_minutes) + " PM"
+        else:
+            new_time += "12" + ":" + str(new_time_minutes) + " PM"
+
     elif start_time_split[1] == "AM" and time_till_am_pm_swap < total_duration_minutes:
+
         new_time_hours = int((total_duration_minutes - time_till_am_pm_swap) / 60)
         print("AM HOURS", new_time_hours)
         new_time_minutes = (total_duration_minutes - time_till_am_pm_swap) - new_time_hours * 60
@@ -40,6 +48,9 @@ def add_time(start, duration, starting_day=False):
             new_time += str(int(new_time_hours)) + ":" + str(new_time_minutes) + " PM"
 
 
+
+
+
     elif start_time_split[1] == "PM" and time_till_am_pm_swap > total_duration_minutes:
         total_minutes = int((total_duration_minutes + start_time_to_minutes))
         new_time_hours = int(total_minutes / 60)
@@ -48,11 +59,7 @@ def add_time(start, duration, starting_day=False):
         print(new_time_minutes)
         new_time += str(new_time_hours) + ":" + str(new_time_minutes) + " PM"
 
-
-
     return new_time
-
-
 
     # # else:
     #     new_time_hours = int(start_time_split[0].split(":")[0]) + int(duration_split[0].split(":")[0])
@@ -62,9 +69,6 @@ def add_time(start, duration, starting_day=False):
     #         new_time_minutes = minutes
     #     else:
     #         new_time_minutes = "0" + str(minutes)
-
-
-
 
     # hours_sum = int(start_hour) + int(duration_hour)
     # minutes_sum = int(start_minutes) + int(duration_minutes)
