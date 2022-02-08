@@ -4,11 +4,11 @@ from time_calculator import add_time
 
 class UnitTests(unittest.TestCase):
 
-    # def test_same_period(self):
-    #     actual = add_time("3:30 PM", "2:12")
-    #     expected = "5:42 PM"
-    #     self.assertEqual(actual, expected, 'Expected calling "add_time()" with "3:30 PM", "2:12" to return "5:42 PM"')
-    #
+    def test_same_period(self):
+        actual = add_time("3:30 PM", "2:12")
+        expected = "5:42 PM"
+        self.assertEqual(actual, expected, 'Expected calling "add_time()" with "3:30 PM", "2:12" to return "5:42 PM"')
+
     # def test_different_period(self):
     #     actual = add_time("11:55 AM", "3:12")
     #     expected = "3:07 PM"
