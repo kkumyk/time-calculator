@@ -55,7 +55,7 @@ def add_time(start, duration, starting_day=False):
         else:
             minutes = calculate_remain_muns
 
-        minutes_str = "0"+ str(minutes)
+        minutes_str = "0" + str(minutes)
         if hours == 0:
             new_time += "12:" + minutes_str[-2:] + am_pm + " (" + str(nr_of_days) + " days later)"
         else:
@@ -99,15 +99,22 @@ def add_time(start, duration, starting_day=False):
 
     if starting_day and "(next day)" in new_time:
         starting_day_norm = starting_day.lower().capitalize()
-        next_day = weekdays[weekdays.index(starting_day_norm)+1]
-        updated_new_time = new_time.split("(")[0].rstrip() + ", " + next_day + " (" +new_time.split("(")[1]
+        post_day = weekdays[weekdays.index(starting_day_norm) + 1]
+        updated_new_time = new_time.split("(")[0].rstrip() + ", " + post_day + " (" + new_time.split("(")[1]
+        print(updated_new_time)
+        return updated_new_time
+
+    elif starting_day and "days later" in new_time:
+        starting_day_norm = starting_day.lower().capitalize()
+        post_day = weekdays[weekdays.index(starting_day_norm) + nr_of_days]
+        updated_new_time = new_time.split("(")[0].rstrip() + ", " + post_day + " (" + new_time.split("(")[1]
         print(updated_new_time)
         return updated_new_time
 
     elif starting_day:
         starting_day_norm = starting_day.lower().capitalize()
         print(new_time + ", " + starting_day_norm)
-        return new_time  + ", " + starting_day_norm
+        return new_time + ", " + starting_day_norm
 
     else:
         return new_time
