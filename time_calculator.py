@@ -3,6 +3,8 @@ def add_time(start, duration, starting_day=False):
     print("total_am_pm_minutes", total_am_pm_minutes)
     start_time_split = start.split()
     start_h_to_minutes = int(start_time_split[0].split(":")[0]) * 60
+
+    start_time_minutes = int(start_time_split[0].split(":")[1])
     start_time_to_minutes = start_h_to_minutes + int(start_time_split[0].split(":")[1])
     print("start_time_to_minutes", start_time_to_minutes)
     time_till_am_pm_swap = total_am_pm_minutes - start_time_to_minutes
@@ -31,24 +33,44 @@ def add_time(start, duration, starting_day=False):
         # nr of days later
         days_count = (total_duration_minutes + time_till_am_pm_swap) / one_day_minutes
         nr_of_days = 0
-        if days_count != round(days_count):
-            nr_of_days = round(days_count + 1)
+        if days_count > round(days_count):
+            nr_of_days = round(days_count) + 1
+        else:
+            nr_of_days = round(days_count)
         print("DAYS COUNT", nr_of_days)
 
         am_pm_in_duration_hours = (duration_hours / 6)
         current_am_pm = start_time_split[1]
         am_pm = ''
-        if current_am_pm == "PM" and am_pm_in_duration_hours % 2 == 0:
-            am_pm += " AM"
-        else:
-            am_pm += " PM"
-        hours = duration_hours % nr_of_days
-        minutes = "0" + str((total_duration_minutes - time_till_am_pm_swap) - duration_h_to_minutes)
 
-        if hours == 0:
-            new_time += "12:" + minutes + am_pm + " (" + str(nr_of_days) + " days later)"
+        #print("SSSSS", round(am_pm_in_duration_hours % 12))
+
+        if current_am_pm == "PM" and am_pm_in_duration_hours / 12 == 0:
+            am_pm += " PM"
         else:
-            new_time += hours + ":" + minutes + am_pm + " (" + str(nr_of_days) + " days later)"
+            am_pm += " AM"
+
+        hours = duration_hours % nr_of_days
+
+        print("HOURS", hours*60)
+
+        minutes = 0
+        calculate_remain_muns = int(duration_minutes) + int(start_time_minutes)
+
+        if calculate_remain_muns > 60:
+            minutes = calculate_remain_muns - 60
+        else:
+            minutes = calculate_remain_muns
+
+        minutes_str = "0"+ str(minutes)
+        if hours == 0:
+            new_time += "12:" + minutes_str[-2:] + am_pm + " (" + str(nr_of_days) + " days later)"
+        else:
+            new_time += str(hours) + ":" + minutes_str[-2:] + am_pm + " (" + str(nr_of_days) + " days later)"
+
+
+
+
 
 
     elif start_time_split[1] == "PM" and time_till_am_pm_swap < total_duration_minutes:
