@@ -29,6 +29,7 @@ def add_time(start, duration, starting_day=False):
     elif duration == "24:00":
         new_time += start + " (next day)"
 
+
     elif total_duration_minutes > one_day_minutes:
         # nr of days later
         days_count = (total_duration_minutes + time_till_am_pm_swap) / one_day_minutes
@@ -94,7 +95,19 @@ def add_time(start, duration, starting_day=False):
         print(new_time_minutes)
         new_time += str(new_time_hours) + ":" + str(new_time_minutes) + " PM"
 
-    if starting_day:
-        return new_time + ", " + starting_day
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+    if starting_day and "(next day)" in new_time:
+        starting_day_norm = starting_day.lower().capitalize()
+        next_day = weekdays[weekdays.index(starting_day_norm)+1]
+        updated_new_time = new_time.split("(")[0].rstrip() + ", " + next_day + " (" +new_time.split("(")[1]
+        print(updated_new_time)
+        return updated_new_time
+
+    elif starting_day:
+        starting_day_norm = starting_day.lower().capitalize()
+        print(new_time + ", " + starting_day_norm)
+        return new_time  + ", " + starting_day_norm
+
     else:
         return new_time
