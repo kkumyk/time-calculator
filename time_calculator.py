@@ -3,13 +3,11 @@ def add_time(start, duration, starting_day=False):
     print("total_am_pm_minutes", total_am_pm_minutes)
     start_time_split = start.split()
     start_h_to_minutes = int(start_time_split[0].split(":")[0]) * 60
-
     start_time_minutes = int(start_time_split[0].split(":")[1])
     start_time_to_minutes = start_h_to_minutes + int(start_time_split[0].split(":")[1])
     print("start_time_to_minutes", start_time_to_minutes)
     time_till_am_pm_swap = total_am_pm_minutes - start_time_to_minutes
     print("time_till_am_pm_swap", time_till_am_pm_swap)
-
     duration_split = duration.split()
     duration_hours = int(duration_split[0].split(":")[0])
     duration_h_to_minutes = duration_hours * 60
@@ -18,7 +16,6 @@ def add_time(start, duration, starting_day=False):
     # print("duration hours, duration_h_to_minutes", duration_hours, duration_h_to_minutes)
     total_duration_minutes = int(duration_h_to_minutes) + int(duration_minutes)
     print("total_duration_minutes", total_duration_minutes)
-    # minutes_sum = int(start_time_to_minutes) + int(duration_minutes)
 
     new_time = ''
     one_day_minutes = 24 * 60
@@ -28,7 +25,6 @@ def add_time(start, duration, starting_day=False):
 
     elif duration == "24:00":
         new_time += start + " (next day)"
-
 
     elif total_duration_minutes > one_day_minutes:
         # nr of days later
@@ -60,7 +56,6 @@ def add_time(start, duration, starting_day=False):
             new_time += "12:" + minutes_str[-2:] + am_pm + " (" + str(nr_of_days) + " days later)"
         else:
             new_time += str(hours) + ":" + minutes_str[-2:] + am_pm + " (" + str(nr_of_days) + " days later)"
-
 
     elif start_time_split[1] == "PM" and time_till_am_pm_swap < total_duration_minutes:
         new_time_hours = int((total_duration_minutes - time_till_am_pm_swap) / 60)
@@ -95,18 +90,19 @@ def add_time(start, duration, starting_day=False):
         print(new_time_minutes)
         new_time += str(new_time_hours) + ":" + str(new_time_minutes) + " PM"
 
-    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday",
+                "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     if starting_day and "(next day)" in new_time:
         starting_day_norm = starting_day.lower().capitalize()
         post_day = weekdays[weekdays.index(starting_day_norm) + 1]
         updated_new_time = new_time.split("(")[0].rstrip() + ", " + post_day + " (" + new_time.split("(")[1]
-        print(updated_new_time)
         return updated_new_time
 
     elif starting_day and "days later" in new_time:
         starting_day_norm = starting_day.lower().capitalize()
-        post_day = weekdays[weekdays.index(starting_day_norm) + nr_of_days]
+        days_max_weeks = nr_of_days - (int(nr_of_days / 7)) * 7
+        print("test", days_max_weeks)
+        post_day = weekdays[weekdays.index(starting_day_norm) + days_max_weeks]
         updated_new_time = new_time.split("(")[0].rstrip() + ", " + post_day + " (" + new_time.split("(")[1]
         print(updated_new_time)
         return updated_new_time
@@ -117,4 +113,5 @@ def add_time(start, duration, starting_day=False):
         return new_time + ", " + starting_day_norm
 
     else:
+        print(new_time)
         return new_time
