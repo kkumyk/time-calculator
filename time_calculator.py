@@ -38,22 +38,14 @@ def add_time(start, duration, starting_day=False):
         else:
             nr_of_days = round(days_count)
         print("DAYS COUNT", nr_of_days)
-
         am_pm_in_duration_hours = (duration_hours / 6)
         current_am_pm = start_time_split[1]
         am_pm = ''
-
-        #print("SSSSS", round(am_pm_in_duration_hours % 12))
-
         if current_am_pm == "PM" and am_pm_in_duration_hours / 12 == 0:
             am_pm += " PM"
         else:
             am_pm += " AM"
-
         hours = duration_hours % nr_of_days
-
-        print("HOURS", hours*60)
-
         minutes = 0
         calculate_remain_muns = int(duration_minutes) + int(start_time_minutes)
 
@@ -67,10 +59,6 @@ def add_time(start, duration, starting_day=False):
             new_time += "12:" + minutes_str[-2:] + am_pm + " (" + str(nr_of_days) + " days later)"
         else:
             new_time += str(hours) + ":" + minutes_str[-2:] + am_pm + " (" + str(nr_of_days) + " days later)"
-
-
-
-
 
 
     elif start_time_split[1] == "PM" and time_till_am_pm_swap < total_duration_minutes:
@@ -106,4 +94,7 @@ def add_time(start, duration, starting_day=False):
         print(new_time_minutes)
         new_time += str(new_time_hours) + ":" + str(new_time_minutes) + " PM"
 
-    return new_time
+    if starting_day:
+        return new_time + ", " + starting_day
+    else:
+        return new_time
