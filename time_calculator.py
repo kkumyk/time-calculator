@@ -25,17 +25,39 @@ def add_time(start_time, duration, start_day=""):
             end_days_later += 1
         print(f"    Updates end values: {end_hours}:{end_minutes} {end_am_pm} ({end_days_later} days later)")
 
-    end_time = f"{end_hours}:{end_minutes:02} {end_am_pm}" + end_days_later_text(end_days_later)
+    weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+    end_time = f"{end_hours}:{end_minutes:02} {end_am_pm}" + end_days_later_text(end_days_later, start_day, weekdays)
+
     print(f"Final end values: {end_time}")
     return end_time
 
 
-def end_days_later_text(end_days_later):
-    if end_days_later == 0:
+def end_days_later_text(end_days_later, start_day, weekdays):
+    start_day_normalize = start_day.lower().title()
+    start_index = weekdays.index(start_day_normalize) # 6
+
+    if end_days_later == 0 and start_day != "":
+        return ", " + start_day_normalize
+    if end_days_later == 0 and start_day == "":
         return ""
-    if end_days_later == 1:
+    if end_days_later == 1 and start_day != "":
+        updated_day = ""
+        update_week = weekdays[start_index:] + weekdays[:start_index]
+        updated_day += update_week[update_week.index(start_day_normalize) + 1]
+        return ", " + updated_day + " (next day)"
+    if end_days_later == 1 and start_day == "":
         return " (next day)"
+
     return f" ({end_days_later} days later)"
+
+
+# def end_days_later_text(end_days_later):
+#     if end_days_later == 0:
+#         return ""
+#     if end_days_later == 1:
+#         return " (next day)"
+#     return f" ({end_days_later} days later)"
 
 #
 # if __name__ == "__main__":
